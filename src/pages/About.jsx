@@ -64,7 +64,7 @@ const About = () => {
               viewport={{ once: true }}
             >
               <img
-                src="/hero1.png"
+                src="/11.jpg"
                 alt="College Building"
                 className="rounded-xl shadow-2xl"
               />

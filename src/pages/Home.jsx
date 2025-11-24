@@ -141,7 +141,7 @@ const Home = () => {
         <div
           className="absolute inset-0 bg-cover bg-center mix-blend-overlay"
           style={{
-            backgroundImage: 'url(/hero1.png)'
+            backgroundImage: 'url(/11.jpg)'
           }}
         ></div>
         
