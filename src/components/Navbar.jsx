@@ -71,7 +71,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
               <img
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="City College Logo"
                 className="h-15 w-15 object-contain"
               />
