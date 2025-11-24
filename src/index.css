@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "tailwindcss";
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* existing mobile tweak */
+@media (max-width: 640px) {
+  .fixed {
+    bottom: 20px;
+  }
+}
+
+/* === PRINT STYLES FOR REGISTRATION FORM (single A4 page) === */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide everything by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Show only the print area */
+  #print-area,
+  #print-area * {
+    visibility: visible !important;
+  }
+
+  /* Make the print area behave like a flat page */
+  #print-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+  }
+
+  /* Hide no-print elements */
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Ensure colors print correctly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Force background colors to print */
+  .bg-gray-100,
+  .font-semibold.bg-gray-100 {
+    background-color: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .bg-\[\#333\] {
+    background-color: #333333 !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ==== Registration sheet palette + table (match fixed PDF style) ==== */
+
+/* whole printed sheet */
+.registration-sheet {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1f2933;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 8px;
+}
+
+/* All tables in registration sheet */
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  font-size: 11px;
+}
+
+.reg-table td,
+.reg-table th {
+  border: 1px solid #000000;
+  padding: 4px 6px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.reg-table thead th {
+  background-color: #f5f5f5;
+  color: #000000;
+  font-weight: 600;
+  font-size: 10px;
+  text-align: left;
+  border: 1px solid #000000;
+}
+
+.reg-table tbody td {
+  border: 1px solid #000000;
+  font-size: 11px;
+}
+
+/* Specific styling for label cells */
+.reg-table .font-semibold.bg-gray-100 {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+}
+
+/* Section headers */
+.registration-sheet .bg-\[\#333\] {
+  background-color: #333333 !important;
+  color: white !important;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px;
+  font-size: 11px;
+  margin: 2px 0;
+}
+
+/* Header section */
+.registration-sheet .border-2.border-black {
+  border: 2px solid #000000;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+
+/* College title styling */
+.registration-sheet h1 {
+  color: #B8860B;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.registration-sheet .text-\[\#B8860B\] {
+  color: #B8860B !important;
+}
+
+/* Barcode container */
+.reg-table svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Image styling */
+.registration-sheet img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Ensure proper spacing */
+.registration-sheet table + table {
+  margin-top: 2px;
+}
+
+/* Print-specific adjustments */
+@media print {
+  .registration-sheet {
+    padding: 0;
+    font-size: 10px;
+  }
+
+  .reg-table {
+    font-size: 10px;
+  }
+
+  .reg-table td,
+  .reg-table th {
+    padding: 3px 5px;
+    font-size: 10px;
+  }
+
+  .registration-sheet h1 {
+    font-size: 22px;
+  }
+
+  .registration-sheet .text-sm,
+  .registration-sheet .text-xs {
+    font-size: 9px !important;
+  }
+
+  /* Ensure images fit properly */
+  .registration-sheet img {
+    max-width: 120px !important;
+    max-height: 120px !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Keep tables from breaking across pages */
+  .reg-table {
+    page-break-inside: avoid;
+  }
+
+  /* Prevent orphaned rows */
+  .reg-table tr {
+    page-break-inside: avoid;
+  }
+}
+
+/* Responsive adjustments for screen view */
+@media (max-width: 768px) {
+  .registration-sheet {
+    font-size: 10px;
+    padding: 4px;
+  }
+
+  .reg-table {
+    font-size: 10px;
+  }
+
+  .reg-table td,
+  .reg-table th {
+    padding: 3px 4px;
+  }
+
+  .registration-sheet h1 {
+    font-size: 18px;
+  }
+}
