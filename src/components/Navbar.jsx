@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [aboutDropdown, setAboutDropdown] = useState(false);
+  const [deledDropdown, setDeledDropdown] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
     setAboutDropdown(false);
+    setDeledDropdown(false);
   }, [location]);
 
   const navLinks = [
@@ -53,7 +55,7 @@ const Navbar = () => {
           </div>
           <div className="flex items-center">
             <FaEnvelope className="mr-2" />
-            <span>cityacademylko@gmail.com</span>
+            <span>citycollege21@gmail.com</span>
           </div>
         </div>
       </div>
@@ -69,32 +71,75 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
               <img
-                src="/logo.png"
+                src="/logo.jpeg"
                 alt="City College Logo"
                 className="h-15 w-15 object-contain"
               />
               <div className="hidden md:block">
                 <h1 className="text-xl lg:text-2xl font-bold text-primary-900 leading-tight">
-                  CITY ACADEMY
+                  City College
                 </h1>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`font-semibold transition-colors hover:text-secondary-500 ${
-                    location.pathname === link.path ? 'text-secondary-500' : 'text-gray-700'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              
-              {/* About Us Dropdown */}
+              {navLinks.map((link) => {
+                // D.El.Ed dropdown (desktop)
+                if (link.name === 'D.El.Ed') {
+                  return (
+                    <div
+                      key={link.name}
+                      className="relative"
+                      onMouseEnter={() => setDeledDropdown(true)}
+                      onMouseLeave={() => setDeledDropdown(false)}
+                    >
+                      <button
+                        className={`font-semibold transition-colors hover:text-secondary-500 flex items-center ${
+                          location.pathname === link.path ? 'text-secondary-500' : 'text-gray-700'
+                        }`}
+                      >
+                        D.El.Ed <FaChevronDown className="ml-1 text-sm" />
+                      </button>
+                      {deledDropdown && (
+                        <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl rounded-lg py-2 animate-fade-in-down">
+                          <a
+                            href="/pdfs/Registration%20Open.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-4 py-2 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                          >
+                            Registration Open
+                          </a>
+                          <a
+                            href="/pdfs/Eligibility.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-4 py-2 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                          >
+                            Eligibility
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                // Normal links (desktop)
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`font-semibold transition-colors hover:text-secondary-500 ${
+                      location.pathname === link.path ? 'text-secondary-500' : 'text-gray-700'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+
+              {/* About Us Dropdown (desktop) */}
               <div
                 className="relative"
                 onMouseEnter={() => setAboutDropdown(true)}
@@ -145,25 +190,72 @@ const Navbar = () => {
           {isOpen && (
             <div className="lg:hidden pb-4 animate-fade-in-down">
               <div className="flex flex-col space-y-3">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`font-semibold py-2 transition-colors hover:text-secondary-500 ${
-                      location.pathname === link.path ? 'text-secondary-500' : 'text-gray-700'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                
+                {navLinks.map((link) => {
+                  // D.El.Ed dropdown (mobile)
+                  if (link.name === 'D.El.Ed') {
+                    return (
+                      <div key={link.name}>
+                        <button
+                          onClick={() => setDeledDropdown(!deledDropdown)}
+                          className="font-semibold py-2 transition-colors hover:text-secondary-500 flex items-center justify-between w-full"
+                        >
+                          D.El.Ed
+                          <FaChevronDown
+                            className={`transition-transform ${
+                              deledDropdown ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                        {deledDropdown && (
+                          <div className="pl-4 mt-2 space-y-2">
+                            <a
+                              href="/pdfs/Registration%20Open.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block py-2 text-gray-600 hover:text-secondary-500 transition-colors"
+                            >
+                              Registration Open
+                            </a>
+                            <a
+                              href="/pdfs/Eligibility.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block py-2 text-gray-600 hover:text-secondary-500 transition-colors"
+                            >
+                              Eligibility
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  // Normal links (mobile)
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className={`font-semibold py-2 transition-colors hover:text-secondary-500 ${
+                        location.pathname === link.path ? 'text-secondary-500' : 'text-gray-700'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+
                 {/* Mobile About Dropdown */}
                 <div>
                   <button
                     onClick={() => setAboutDropdown(!aboutDropdown)}
                     className="font-semibold py-2 transition-colors hover:text-secondary-500 flex items-center justify-between w-full"
                   >
-                    About Us <FaChevronDown className={`transition-transform ${aboutDropdown ? 'rotate-180' : ''}`} />
+                    About Us{' '}
+                    <FaChevronDown
+                      className={`transition-transform ${
+                        aboutDropdown ? 'rotate-180' : ''
+                      }`}
+                    />
                   </button>
                   {aboutDropdown && (
                     <div className="pl-4 mt-2 space-y-2">
