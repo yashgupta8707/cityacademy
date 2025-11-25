@@ -55,7 +55,7 @@ const Navbar = () => {
           </div>
           <div className="flex items-center">
             <FaEnvelope className="mr-2" />
-            <span>citycollege21@gmail.com</span>
+            <span>cityacademylko@gmail.com</span>
           </div>
         </div>
       </div>
@@ -72,12 +72,12 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3">
               <img
                 src="/logo.png"
-                alt="City College Logo"
+                alt="City Academy Logo"
                 className="h-15 w-15 object-contain"
               />
               <div className="hidden md:block">
                 <h1 className="text-xl lg:text-2xl font-bold text-primary-900 leading-tight">
-                  City College
+                  City Academy
                 </h1>
               </div>
             </Link>

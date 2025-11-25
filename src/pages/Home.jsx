@@ -202,7 +202,7 @@ const Home = () => {
             >
               <img
                 src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800"
-                alt="Welcome to City College"
+                alt="Welcome to City Academy"
                 className="rounded-xl shadow-2xl"
               />
             </motion.div>

@@ -83,7 +83,7 @@ const Director = () => {
                   <div className="space-y-6 text-gray-700 leading-relaxed">
                     <p className="text-lg">
                       We are living in an age of uncertainty, change and competition. Today's environment moves fast and 
-                      modern systems have to encourage flexibility, initiative and empowerment. <span className="font-semibold text-primary-900">CITY COLLEGE 
+                      modern systems have to encourage flexibility, initiative and empowerment. <span className="font-semibold text-primary-900">City Academy 
                       OF MANAGEMENT</span> emphasizes the all-round development of its students. It aims at producing not 
                       only good professionals, teachers, but worthy citizens of a great Country, aiding in its overall 
                       progress and development. I am proud to introduce these premier institutions of learning where we 
