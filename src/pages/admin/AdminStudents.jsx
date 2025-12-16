@@ -5,10 +5,12 @@ import {
   FaSearch,
   FaArrowLeft,
   FaSignOutAlt,
-  FaEye
+  FaEye,
+  FaFileExcel
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
 
 const AdminStudents = () => {
   const navigate = useNavigate();
@@ -113,6 +115,121 @@ const AdminStudents = () => {
     navigate('/admin/login');
   };
 
+  const exportToExcel = async () => {
+    try {
+      toast.info('Fetching all student data...');
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        navigate('/admin/login');
+        return;
+      }
+
+      // Fetch all students without pagination
+      const params = new URLSearchParams();
+      if (filters.search) params.append('search', filters.search);
+      if (filters.status !== 'all') params.append('status', filters.status);
+      if (filters.course !== 'all') params.append('course', filters.course);
+      params.append('page', 1);
+      params.append('limit', 10000); // Fetch all students
+
+      const response = await axios.get(
+        `https://clc-backend-0isa.onrender.com/api/admin/students?${params.toString()}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        const allStudents = response.data.students;
+
+        // Prepare data for Excel
+        const excelData = allStudents.map((student, index) => ({
+          'S.No': index + 1,
+          'Registration No': student.registrationNo || '',
+          'Student Name': student.studentName || student.fullName || '',
+          'Father Name': student.fatherName || '',
+          'Mother Name': student.motherName || '',
+          'Date of Birth': student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-IN') : '',
+          'Gender': student.gender || '',
+          'Category': student.category || '',
+          'Email': student.email || '',
+          'Phone': student.phone || '',
+          'Alternate Phone': student.alternatePhone || '',
+          'Address': student.address || '',
+          'City': student.city || '',
+          'State': student.state || '',
+          'Pincode': student.pincode || '',
+          'Course': student.course || '',
+          'Admission Year': student.admissionYear || '',
+          'Roll Number': student.rollNumber || '',
+          'Qualification': student.qualification || '',
+          'Previous School': student.previousSchool || '',
+          'Previous Percentage': student.previousPercentage || '',
+          'Aadhar Number': student.aadharNumber || '',
+          'Blood Group': student.bloodGroup || '',
+          'Status': student.status || '',
+          'Admission Date': student.admissionDate ? new Date(student.admissionDate).toLocaleDateString('en-IN') : '',
+          'Registered On': student.createdAt ? new Date(student.createdAt).toLocaleDateString('en-IN') : ''
+        }));
+
+        // Create worksheet
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+        // Set column widths
+        const columnWidths = [
+          { wch: 6 },  // S.No
+          { wch: 15 }, // Registration No
+          { wch: 25 }, // Student Name
+          { wch: 25 }, // Father Name
+          { wch: 25 }, // Mother Name
+          { wch: 12 }, // DOB
+          { wch: 10 }, // Gender
+          { wch: 12 }, // Category
+          { wch: 30 }, // Email
+          { wch: 15 }, // Phone
+          { wch: 15 }, // Alternate Phone
+          { wch: 35 }, // Address
+          { wch: 15 }, // City
+          { wch: 15 }, // State
+          { wch: 10 }, // Pincode
+          { wch: 12 }, // Course
+          { wch: 12 }, // Admission Year
+          { wch: 15 }, // Roll Number
+          { wch: 20 }, // Qualification
+          { wch: 25 }, // Previous School
+          { wch: 15 }, // Previous Percentage
+          { wch: 15 }, // Aadhar Number
+          { wch: 12 }, // Blood Group
+          { wch: 12 }, // Status
+          { wch: 15 }, // Admission Date
+          { wch: 15 }  // Registered On
+        ];
+        worksheet['!cols'] = columnWidths;
+
+        // Create workbook
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Students Data');
+
+        // Generate file name with current date
+        const fileName = `Students_Data_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+        // Download file
+        XLSX.writeFile(workbook, fileName);
+
+        toast.success(`Excel file downloaded successfully! Total records: ${allStudents.length}`);
+      }
+    } catch (error) {
+      console.error('Error exporting to Excel:', error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem('adminToken');
+        navigate('/admin/login');
+        toast.error('Session expired. Please login again.');
+      } else {
+        toast.error('Failed to export data to Excel');
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 print:bg-white">
       {/* Top Navigation */}
@@ -211,7 +328,17 @@ const AdminStudents = () => {
               Showing <span className="font-semibold text-slate-700">{students.length}</span> of{' '}
               <span className="font-semibold text-slate-700">{pagination.totalStudents}</span> students
             </p>
-            <p>Page {pagination.currentPage} of {pagination.totalPages}</p>
+            <div className="flex items-center gap-3">
+              <p>Page {pagination.currentPage} of {pagination.totalPages}</p>
+              <button
+                onClick={exportToExcel}
+                className="inline-flex items-center gap-2 rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-2 text-xs font-semibold text-green-700 hover:bg-green-500/20 transition-all duration-200"
+                title="Export all students data to Excel"
+              >
+                <FaFileExcel className="text-sm" />
+                Export to Excel
+              </button>
+            </div>
           </div>
         </div>
 
