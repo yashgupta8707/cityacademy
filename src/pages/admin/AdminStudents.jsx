@@ -147,62 +147,136 @@ const AdminStudents = () => {
           'S.No': index + 1,
           'Registration No': student.registrationNo || '',
           'Student Name': student.studentName || student.fullName || '',
-          'Father Name': student.fatherName || '',
-          'Mother Name': student.motherName || '',
-          'Date of Birth': student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-IN') : '',
-          'Gender': student.gender || '',
-          'Category': student.category || '',
+          'Full Name': student.fullName || '',
           'Email': student.email || '',
           'Phone': student.phone || '',
-          'Alternate Phone': student.alternatePhone || '',
+          'Date of Birth': student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-IN') : '',
+          'Gender': student.gender || '',
+          'Father Name': student.fatherName || '',
+          'Mother Name': student.motherName || '',
+          'Nationality': student.nationality || '',
+          'Category': student.category || '',
+          'Aadhaar No': student.adhaarNo || '',
+          'Father Contact': student.fatherContact || '',
           'Address': student.address || '',
-          'City': student.city || '',
           'State': student.state || '',
+          'District': student.district || '',
           'Pincode': student.pincode || '',
           'Course': student.course || '',
-          'Admission Year': student.admissionYear || '',
-          'Roll Number': student.rollNumber || '',
-          'Qualification': student.qualification || '',
-          'Previous School': student.previousSchool || '',
-          'Previous Percentage': student.previousPercentage || '',
-          'Aadhar Number': student.aadharNumber || '',
-          'Blood Group': student.bloodGroup || '',
+
+          // 10th Details
+          '10th Board': student.tenthBoard || '',
+          '10th Year': student.tenthYear || '',
+          '10th Marksheet No': student.tenthMarksheetNo || '',
+          '10th Roll No': student.tenthRollNo || '',
+          '10th Total Marks': student.tenthTotalMarks || '',
+          '10th Marks Obtained': student.tenthMarksObtained || '',
+          '10th Percentage': student.tenthPercentage || '',
+
+          // 12th Details
+          '12th Board': student.twelfthBoard || '',
+          '12th Year': student.twelfthYear || '',
+          '12th Marksheet No': student.twelfthMarksheetNo || '',
+          '12th Roll No': student.twelfthRollNo || '',
+          '12th Total Marks': student.twelfthTotalMarks || '',
+          '12th Marks Obtained': student.twelfthMarksObtained || '',
+          '12th Percentage': student.twelfthPercentage || '',
+
+          // Graduation Details
+          'Graduation Board/University': student.graduationBoard || '',
+          'Graduation Year': student.graduationYear || '',
+          'Graduation Marksheet No': student.graduationMarksheetNo || '',
+          'Graduation Roll No': student.graduationRollNo || '',
+          'Graduation Total Marks': student.graduationTotalMarks || '',
+          'Graduation Marks Obtained': student.graduationMarksObtained || '',
+          'Graduation Percentage': student.graduationPercentage || '',
+
+          // Documents Info
+          'Documents Uploaded': student.documents ? 'Yes' : 'No',
+          'Photo': student.documents?.photo ? 'Yes' : 'No',
+          'Signature': student.documents?.signature ? 'Yes' : 'No',
+          '10th Marksheet': student.documents?.tenthMarksheet ? 'Yes' : 'No',
+          '12th Marksheet': student.documents?.twelfthMarksheet ? 'Yes' : 'No',
+          'Graduation Marksheet': student.documents?.graduationMarksheet ? 'Yes' : 'No',
+          'Aadhaar Card': student.documents?.adhaarCard ? 'Yes' : 'No',
+          'TC/Migration': student.documents?.tcMigration ? 'Yes' : 'No',
+
+          // Status and Dates
+          'Declaration Accepted': student.declarationAccepted ? 'Yes' : 'No',
           'Status': student.status || '',
-          'Admission Date': student.admissionDate ? new Date(student.admissionDate).toLocaleDateString('en-IN') : '',
-          'Registered On': student.createdAt ? new Date(student.createdAt).toLocaleDateString('en-IN') : ''
+          'Registration Date': student.registrationDate ? new Date(student.registrationDate).toLocaleString('en-IN') : '',
+          'Created At': student.createdAt ? new Date(student.createdAt).toLocaleString('en-IN') : '',
+          'Updated At': student.updatedAt ? new Date(student.updatedAt).toLocaleString('en-IN') : ''
         }));
 
         // Create worksheet
         const worksheet = XLSX.utils.json_to_sheet(excelData);
 
-        // Set column widths
+        // Set column widths for better readability
         const columnWidths = [
-          { wch: 6 },  // S.No
-          { wch: 15 }, // Registration No
-          { wch: 25 }, // Student Name
-          { wch: 25 }, // Father Name
-          { wch: 25 }, // Mother Name
-          { wch: 12 }, // DOB
-          { wch: 10 }, // Gender
-          { wch: 12 }, // Category
-          { wch: 30 }, // Email
-          { wch: 15 }, // Phone
-          { wch: 15 }, // Alternate Phone
-          { wch: 35 }, // Address
-          { wch: 15 }, // City
-          { wch: 15 }, // State
-          { wch: 10 }, // Pincode
-          { wch: 12 }, // Course
-          { wch: 12 }, // Admission Year
-          { wch: 15 }, // Roll Number
-          { wch: 20 }, // Qualification
-          { wch: 25 }, // Previous School
-          { wch: 15 }, // Previous Percentage
-          { wch: 15 }, // Aadhar Number
-          { wch: 12 }, // Blood Group
-          { wch: 12 }, // Status
-          { wch: 15 }, // Admission Date
-          { wch: 15 }  // Registered On
+          { wch: 6 },   // S.No
+          { wch: 15 },  // Registration No
+          { wch: 25 },  // Student Name
+          { wch: 25 },  // Full Name
+          { wch: 30 },  // Email
+          { wch: 15 },  // Phone
+          { wch: 12 },  // DOB
+          { wch: 10 },  // Gender
+          { wch: 25 },  // Father Name
+          { wch: 25 },  // Mother Name
+          { wch: 12 },  // Nationality
+          { wch: 12 },  // Category
+          { wch: 15 },  // Aadhaar No
+          { wch: 15 },  // Father Contact
+          { wch: 40 },  // Address
+          { wch: 15 },  // State
+          { wch: 15 },  // District
+          { wch: 10 },  // Pincode
+          { wch: 12 },  // Course
+
+          // 10th Details
+          { wch: 20 },  // 10th Board
+          { wch: 10 },  // 10th Year
+          { wch: 15 },  // 10th Marksheet No
+          { wch: 15 },  // 10th Roll No
+          { wch: 12 },  // 10th Total Marks
+          { wch: 15 },  // 10th Marks Obtained
+          { wch: 12 },  // 10th Percentage
+
+          // 12th Details
+          { wch: 20 },  // 12th Board
+          { wch: 10 },  // 12th Year
+          { wch: 15 },  // 12th Marksheet No
+          { wch: 15 },  // 12th Roll No
+          { wch: 12 },  // 12th Total Marks
+          { wch: 15 },  // 12th Marks Obtained
+          { wch: 12 },  // 12th Percentage
+
+          // Graduation Details
+          { wch: 40 },  // Graduation Board/University
+          { wch: 12 },  // Graduation Year
+          { wch: 18 },  // Graduation Marksheet No
+          { wch: 18 },  // Graduation Roll No
+          { wch: 15 },  // Graduation Total Marks
+          { wch: 18 },  // Graduation Marks Obtained
+          { wch: 15 },  // Graduation Percentage
+
+          // Documents
+          { wch: 18 },  // Documents Uploaded
+          { wch: 10 },  // Photo
+          { wch: 12 },  // Signature
+          { wch: 15 },  // 10th Marksheet
+          { wch: 15 },  // 12th Marksheet
+          { wch: 20 },  // Graduation Marksheet
+          { wch: 15 },  // Aadhaar Card
+          { wch: 15 },  // TC/Migration
+
+          // Status and Dates
+          { wch: 18 },  // Declaration Accepted
+          { wch: 12 },  // Status
+          { wch: 20 },  // Registration Date
+          { wch: 20 },  // Created At
+          { wch: 20 }   // Updated At
         ];
         worksheet['!cols'] = columnWidths;
 
