@@ -90,7 +90,7 @@ const Navbar = () => {
                   return (
                     <div
                       key={link.name}
-                      className="relative"
+                      className="relative group"
                       onMouseEnter={() => setDeledDropdown(true)}
                       onMouseLeave={() => setDeledDropdown(false)}
                     >
@@ -102,23 +102,33 @@ const Navbar = () => {
                         D.El.Ed <FaChevronDown className="ml-1 text-sm" />
                       </button>
                       {deledDropdown && (
-                        <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl rounded-lg py-2 animate-fade-in-down">
-                          <a
-                            href="/pdfs/Registration%20Open.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block px-4 py-2 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
-                          >
-                            Registration Open
-                          </a>
-                          <a
-                            href="/pdfs/Eligibility.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block px-4 py-2 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
-                          >
-                            Eligibility
-                          </a>
+                        <div className="absolute top-full left-0 pt-2">
+                          <div className="w-56 bg-white shadow-xl rounded-lg py-2 animate-fade-in-down">
+                            <a
+                              href="/pdfs/Registration%20Open.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block px-4 py-2 text-gray-700 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                            >
+                              Registration Open
+                            </a>
+                            <a
+                              href="/pdfs/Eligibility.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block px-4 py-2 text-gray-700 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                            >
+                              Eligibility
+                            </a>
+                            <a
+                              href="/pdfs/CA.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block px-4 py-2 text-gray-700 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                            >
+                              Rank
+                            </a>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -141,7 +151,7 @@ const Navbar = () => {
 
               {/* About Us Dropdown (desktop) */}
               <div
-                className="relative"
+                className="relative group"
                 onMouseEnter={() => setAboutDropdown(true)}
                 onMouseLeave={() => setAboutDropdown(false)}
               >
@@ -155,22 +165,24 @@ const Navbar = () => {
                   About Us <FaChevronDown className="ml-1 text-sm" />
                 </button>
                 {aboutDropdown && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl rounded-lg py-2 animate-fade-in-down">
-                    {aboutLinks.map((link) => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        className="block px-4 py-2 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
+                  <div className="absolute top-full left-0 pt-2">
+                    <div className="w-56 bg-white shadow-xl rounded-lg py-2 animate-fade-in-down">
+                      {aboutLinks.map((link) => (
+                        <Link
+                          key={link.path}
+                          to={link.path}
+                          className="block px-4 py-2 text-gray-700 hover:bg-secondary-50 hover:text-secondary-500 transition-colors"
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
               <Link
-                to="/pdfs/Registration%20Open.pdf"
+                to="/registration"
                 className="btn-primary"
               >
                 Online Registration
@@ -223,6 +235,14 @@ const Navbar = () => {
                               className="block py-2 text-gray-600 hover:text-secondary-500 transition-colors"
                             >
                               Eligibility
+                            </a>
+                            <a
+                              href="/pdfs/CA.pdf"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block py-2 text-gray-600 hover:text-secondary-500 transition-colors"
+                            >
+                              Rank
                             </a>
                           </div>
                         )}
