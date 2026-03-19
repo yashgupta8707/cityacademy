@@ -204,9 +204,9 @@ const AdminStudents = () => {
           // Status and Dates
           'Declaration Accepted': student.declarationAccepted ? 'Yes' : 'No',
           'Status': student.status || '',
-          'Registration Date': student.registrationDate ? new Date(student.registrationDate).toLocaleString('en-IN') : '',
-          'Created At': student.createdAt ? new Date(student.createdAt).toLocaleString('en-IN') : '',
-          'Updated At': student.updatedAt ? new Date(student.updatedAt).toLocaleString('en-IN') : ''
+          // 'Registration Date': student.registrationDate ? new Date(student.registrationDate).toLocaleString('en-IN') : '',
+          'Submission Date': student.createdAt ? new Date(student.createdAt).toLocaleString('en-IN') : '',
+          // 'Updated At': student.updatedAt ? new Date(student.updatedAt).toLocaleString('en-IN') : ''
         }));
 
         // Create worksheet
@@ -274,9 +274,9 @@ const AdminStudents = () => {
           // Status and Dates
           { wch: 18 },  // Declaration Accepted
           { wch: 12 },  // Status
-          { wch: 20 },  // Registration Date
-          { wch: 20 },  // Created At
-          { wch: 20 }   // Updated At
+          // { wch: 20 },  // Registration Date
+          { wch: 20 },  // Submission Date
+          // { wch: 20 }   // Updated At
         ];
         worksheet['!cols'] = columnWidths;
 
